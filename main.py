@@ -4,12 +4,13 @@ from matplotlib import pyplot as plt
 
 # Set style theme
 plt.style.use('seaborn-v0_8-pastel')
-print(plt.style.available)
+# print(plt.style.available)
 
 # Read CSV into DataFrame
 df = pd.read_csv('class-data-v1.csv')
-print(df.info())
+# print(df.info())
 
+# Catplot
 barWidth = 0.2
 r1 = np.arange(8)
 r2 = r1 + barWidth
@@ -20,12 +21,24 @@ colors = df['Hex Color'].dropna().tolist()
 fig, ax = plt.subplots(dpi=300)
 ax.bar(r1, df['Webdev Rating'].dropna(), color=colors, width=barWidth, edgecolor='#ffffff', label='WebDev')
 ax.bar(r2, df['Java Rating'].dropna(), color=colors, width=barWidth, edgecolor='#ffffff', label='Java')
-ax.bar(r3, df['Python Rating'].dropna(), color=colors, width=barWidth, edgecolor='#ffffff', label='Python}')
-
+ax.bar(r3, df['Python Rating'].dropna(), color=colors, width=barWidth, edgecolor='#ffffff', label='Python')
 
 ax.set_xticks(r1 + barWidth)
 ax.set_xticklabels(df['Name'].head(8))
 ax.legend() # TODO: fix legend to show language names 
 plt.title('Programming Language Ratings by Student')
 plt.savefig('barchart.png', bbox_inches='tight')
+plt.close()
+
+# Scatterplot
+
+plt.scatter(df['Temperature Preference'].dropna(), df['Wakeup Time Weekday'].dropna(), s=df['Commute Time Minutes'].dropna(), c=colors, alpha=1)
+
+plt.title('Y-axis vs. X-axis')
+plt.xlabel('Temperature Preference')
+plt.ylabel('Wakeup Time Weekday')
+plt.axis('equal') 
+plt.ylim()
+
+plt.savefig('scatterplot.png')
 plt.close()
