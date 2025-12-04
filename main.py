@@ -30,15 +30,32 @@ plt.title('Programming Language Ratings by Student')
 plt.savefig('barchart.png', bbox_inches='tight')
 plt.close()
 
-# Scatterplot
+# convert string to datetime object
+df['Wakeup Time Weekday'] = pd.to_datetime(df['Wakeup Time Weekday'], format='%H:%M').dt.time
 
-plt.scatter(df['Temperature Preference'].dropna(), df['Wakeup Time Weekday'].dropna(), s=df['Commute Time Minutes'].dropna(), c=colors, alpha=1)
+# convert datetime object to float
+df['Wakeup Time Weekday Float'] = df['Wakeup Time Weekday'].apply(
+    lambda t: t.hour * 60 + t.minute
+)
+df['Wakeup Before School'] = (8 * 60 + 15) - df['Wakeup Time Weekday Float']
+#df_sorted = df.sort_values(by='Wakeup Time Weekday', ascending=True)
+
+# Scatterplot
+plt.scatter(df['Wakeup Before School'].dropna(), 
+            df['Temperature Preference'].dropna(), 
+            s=df['Commute Time Minutes'].dropna() * 10, 
+            c=colors, alpha=1)
+
+for i, row in df.iterrows():
+    plt.text(row['Wakeup Before School'] - 3.6, row['Temperature Preference'] + 2.2, row['Name'], fontsize=9)
+
+plt.figtext(1, 0.02, 'Size of dots represent commute time', ha='center', fontsize=10, color='gray')
 
 plt.title('Y-axis vs. X-axis')
-plt.xlabel('Temperature Preference')
-plt.ylabel('Wakeup Time Weekday')
+plt.xlabel('Wakeup Time in Minutes Before School')
+plt.ylabel('Temperature Preference')
 plt.axis('equal') 
-plt.ylim()
+
 
 plt.savefig('scatterplot.png')
 plt.close()
