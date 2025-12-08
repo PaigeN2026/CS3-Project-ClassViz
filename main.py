@@ -23,6 +23,8 @@ ax.bar(r1, df['Webdev Rating'].dropna(), color=colors, width=barWidth, edgecolor
 ax.bar(r2, df['Java Rating'].dropna(), color=colors, width=barWidth, edgecolor='#ffffff', label='Java')
 ax.bar(r3, df['Python Rating'].dropna(), color=colors, width=barWidth, edgecolor='#ffffff', label='Python')
 
+
+
 ax.set_xticks(r1 + barWidth)
 ax.set_xticklabels(df['Name'].head(8))
 ax.legend() # TODO: fix legend to show language names 
@@ -47,11 +49,11 @@ plt.scatter(df['Wakeup Before School'].dropna(),
             c=colors, alpha=1)
 
 for i, row in df.iterrows():
-    plt.text(row['Wakeup Before School'] - 3.6, row['Temperature Preference'] + 2.2, row['Name'], fontsize=9)
+    plt.text(row['Wakeup Before School'] - 4.9, row['Temperature Preference'] + 6.6, row['Name'], fontsize=9)
 
-plt.figtext(1, 0.02, 'Size of dots represent commute time', ha='center', fontsize=10, color='gray')
+plt.figtext(0.5, 0.2, 'Size of dots represent commute time', ha='center', fontsize=10, color='gray')
 
-plt.title('Y-axis vs. X-axis')
+plt.title('Temperature Preference vs. Wakeup')
 plt.xlabel('Wakeup Time in Minutes Before School')
 plt.ylabel('Temperature Preference')
 plt.axis('equal') 
